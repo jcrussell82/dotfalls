@@ -86,9 +86,15 @@
     const oSlotX = computeOSlotX(titleCtx, w, h);
     const restY = h * 0.5;
 
+    // Start below the top edge by at least the dot's full bloom radius
+    // so the glow never gets visibly clipped by the canvas boundary —
+    // combined with the fade-in below, the dot simply materializes
+    // just inside the top of the screen rather than popping in cut off.
+    const startY = Math.min(h * 0.06, 60);
+
     const dot = {
       x: oSlotX,
-      y: 0, // start right at the top edge of the visible screen
+      y: startY,
       appearT: 0,
       radius: 9,
     };
@@ -113,13 +119,13 @@
       const appearT = Utils.clamp(t / 0.9, 0, 1);
       dot.appearT = Utils.easeOutCubic(appearT);
 
-      // Phase 2: hold briefly at the top edge in silence, then fall into frame.
+      // Phase 2: hold briefly near the top in silence, then fall into frame.
       const fallDelay = 1.1;
       let fallProgress = 0;
       if (t > fallDelay) {
         fallProgress = Utils.clamp((t - fallDelay) / 2.4, 0, 1);
       }
-      const fallY = Utils.lerp(0, restY, Utils.easeInOutSine(fallProgress));
+      const fallY = Utils.lerp(startY, restY, Utils.easeInOutSine(fallProgress));
       dot.y = fallY;
 
       // Phase 3: title fades in as it falls.
