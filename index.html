@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>DotFalls</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div id="app">
+    <canvas id="scene"></canvas>
+
+    <!-- Minimal HUD: timer, level, pause. Hidden except during play. -->
+    <div id="hud" class="hidden">
+      <div id="hud-left">
+        <span id="timer">00:00</span>
+      </div>
+      <div id="hud-center">
+        <span id="level-label">LEVEL 1</span>
+      </div>
+      <div id="hud-right">
+        <button id="pause-btn" aria-label="Pause">
+          <svg width="18" height="18" viewBox="0 0 18 18">
+            <rect x="4" y="2" width="3.4" height="14" fill="currentColor" />
+            <rect x="10.6" y="2" width="3.4" height="14" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Title screen -->
+    <div id="screen-title" class="screen">
+      <div class="title-dot-wrap">
+        <canvas id="title-canvas"></canvas>
+      </div>
+      <div class="prompt">TAP TO START</div>
+    </div>
+
+    <!-- Level intro (level number + requirement, brief pause before drop) -->
+    <div id="screen-levelintro" class="screen hidden">
+      <div class="level-name" id="intro-level-name">LEVEL 1</div>
+      <div class="level-goal" id="intro-level-goal">KEEP 1 DOT ALIVE FOR 20s</div>
+    </div>
+
+    <!-- Pause overlay -->
+    <div id="screen-pause" class="screen hidden">
+      <div class="pause-title">PAUSED</div>
+      <button class="icon-btn" id="resume-btn" aria-label="Resume">
+        <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="6,4 18,11 6,18" fill="currentColor"/></svg>
+      </button>
+      <div class="pause-sub">TAP TO RESUME</div>
+    </div>
+
+    <!-- Failure screen -->
+    <div id="screen-fail" class="screen hidden">
+      <div class="fail-title">ALMOST.</div>
+      <div class="fail-rule"></div>
+      <div class="fail-sub">CONTINUE?</div>
+      <div class="fail-actions">
+        <button class="icon-btn" id="fail-no" aria-label="No, quit">
+          <svg width="20" height="20" viewBox="0 0 20 20">
+            <line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="1.4" />
+            <line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="1.4" />
+          </svg>
+        </button>
+        <button class="icon-btn" id="fail-yes" aria-label="Yes, retry">
+          <svg width="20" height="20" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="fail-labels">
+        <span>NO</span>
+        <span>YES</span>
+      </div>
+    </div>
+
+    <!-- Level cleared transition -->
+    <div id="screen-cleared" class="screen hidden">
+      <div class="cleared-title">CLEARED</div>
+    </div>
+
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/dot.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
